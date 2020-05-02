@@ -1,0 +1,71 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>View Tickets</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script type="text/javascript" src="/eel.js"></script>
+    <script type="text/javascript">
+
+        function addCell(tr, val) {
+            var td = document.createElement("td");
+            td.innerHTML = val;
+            tr.appendChild(td);
+        }
+
+        function addRow(table, val1, val2, val3) {
+            var tr = document.createElement('tr');
+            addCell(tr, val1);
+            addCell(tr, val2);
+            addCell(tr, val3);
+            table.appendChild(tr);
+        }
+
+        function setTickets(ticketList) {
+            var select = document.getElementById("ticketTable");
+            var ticketsSoldHeading = document.getElementById("ticketsSoldHeading");
+            var jackpotHeading = document.getElementById("jackpotHeading");
+            var jackpot = ticketList.length * 5;
+            jackpotHeading.innerHTML = "Jackpot: $" + jackpot.toString();
+            ticketsSoldHeading.innerHTML = ticketList.length.toString() + " Tickets Sold";
+            for (i = 0; i < ticketList.length; i++) {
+                addRow(select, ticketList[i][1], ticketList[i][2], ticketList[i][3]);
+            }
+        }
+
+        eel.getSoldTickets()(setTickets);
+
+    </script>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Lottery</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li><a href="ticket.html">Sell a Ticket</a></li>
+                <li class="active"><a href="viewTickets.html">View Sold Tickets</a></li>
+                <li><a href="runLottery.html">Run the Lottery</a></li>
+            </ul>
+        </div>
+    </nav>
+</head>
+<body>
+    <div class="col text-center">
+        <h3 id="ticketsSoldHeading"></h3>
+        <h3 id="jackpotHeading"></h3>
+    </div>
+    <table class="table table-striped" id="ticketTable">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Numbers</th>
+                <th scope="col">Date</th>
+            </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+</body>
+</html>

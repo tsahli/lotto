@@ -29,7 +29,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="web\index.html" />
+    <Content Include="web\odometer.js" />
     <Content Include="web\ticket.html" />
+    <Content Include="web\viewTickets.html" />
+    <Content Include="web\runLottery.html" />
+    <Content Include="web\odometer-theme-default.css" />
   </ItemGroup>
   <ItemGroup>
     <InterpreterReference Include="Global|PythonCore|3.7" />

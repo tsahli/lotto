@@ -1,6 +1,8 @@
 import eel
 import sqlite3
 import secrets
+from datetime import date
+import os
 
 eel.init('web')
 
@@ -42,15 +44,61 @@ def getUserNames():
         nameList.append(name)
     return nameList
 
-#x = 0
-#while x < 50:
-#    picks = generatePicks()
-#    print(picks)
-#    x += 1
+@eel.expose
+def makeTicket(obj):
+    name = obj['name']
+    numTickets = obj['numberOfTickets']
+    fetch = read("SELECT `Numbers` FROM `Lottery`")
+    existingPickList = []
+    for row in fetch:
+        existingPickList.append(row[0])
+    i = 0
+    today = date.today()
+    userPicks = []
+
+    while i < int(numTickets):
+        picks = generatePicks()
+        pickStr = str(picks[0]) + ", " + str(picks[1]) + ", " + str(picks[2])
+        if pickStr not in existingPickList:
+            userPicks.append(pickStr)
+            database()
+            cursor.execute("INSERT INTO `Lottery` (`Name`, `Numbers`, `Date`) VALUES (?,?,?)", (name, pickStr, str(today)))
+            conn.commit()
+            i += 1
+        else:
+            continue
+    cursor.close()
+    conn.close()
+
+    desktop = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop') 
+    userPicks.sort()
+    filename = desktop + "\\" + name + " Picks on " + str(today) + ".txt"
+    with open(filename, "a") as txtFile:
+        txtFile.write(name + "\t" + str(today) + "\n\n")
+        for pick in userPicks:
+            txtFile.write(pick + "\n")
+    os.startfile(filename)
 
 @eel.expose
-def say_hello_py(x):
-    print('Hello from ' + x)
+def getSoldTickets():
+    fetch = read("SELECT * FROM `Lottery` ORDER BY `Date`")
+    return fetch
 
-eel.start('index.html', size=(700,800))
+@eel.expose
+def runLottery():
+    #winningNumbers = generatePicks()
+    winningNumbers = [8, 9, 10]
+    winningNumbersStr = str(winningNumbers[0]) + ", " + str(winningNumbers[1]) + ", " + str(winningNumbers[2])
+    database()
+    fetch = read("SELECT `Name` FROM `Lottery` WHERE `Numbers` = '" + winningNumbersStr + "'")
+    if fetch is not None:
+        for row in fetch:
+            winnersName = row[0]
+        return winnersName, winningNumbersStr
+    else:
+        return "There was no winner!", winningNumbersStr
+
+
+
+eel.start('ticket.html', size=(800,800))
 

@@ -1,0 +1,66 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Run Lottery</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="odometer-theme-default.css" />
+    <script type="text/javascript" src="odometer.js"></script>
+    <script type="text/javascript" src="/eel.js"></script>
+    <script type="text/javascript">
+
+        function runLotto(results) {
+            var winningNums = results[1];
+            var numArray = winningNums.split(",");
+            console.log(numArray);
+            var num1 = parseInt(numArray[0]);
+            if (num1.toString().length == 1) {
+                num1 = "" + 0 + num1;
+            }
+            console.log(num1);
+            var num2 = parseInt(numArray[1]);
+            var num3 = parseInt(numArray[2]);
+            setTimeout(function () {
+                odometer1.innerHTML = num1;
+                odometer2.innerHTML = num2;
+                odometer3.innerHTML = num3;
+            }, 500);
+        }
+
+        
+
+
+
+
+    </script>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Lottery</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li><a href="ticket.html">Sell a Ticket</a></li>
+                <li><a href="viewTickets.html">View Sold Tickets</a></li>
+                <li class="active"><a href="runLottery.html">Run the Lottery</a></li>
+            </ul>
+        </div>
+    </nav>
+</head>
+<body>
+    <div class="col text-center">
+        <p>The button below will select three random numbers, and display the name of the winner, if there was one.</p>
+
+        <a onclick="eel.runLottery()(runLotto);" class="btn btn-danger btn-lg" role="button">Run the Lottery</a>
+    </div>
+    <div class="col text-center">
+        <h1 id="winningNums"></h1>
+        <h1 id="winnersName"></h1>
+    </div>
+    <div class="col text-center">
+        <p style="font-size:100px;" id="odometer1" class="odometer"></p>
+        <p style="font-size:100px;" id="odometer2" class="odometer"></p>
+        <p style="font-size:100px;" id="odometer3" class="odometer"></p>
+    </div>
+</body>
+</html>
