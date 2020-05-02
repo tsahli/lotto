@@ -1,0 +1,27 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Lottery</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script type="text/javascript" src="/eel.js"></script>
+    <script type="text/javascript">
+        eel.expose(say_hello_js); // Expose this function to Python
+        function say_hello_js(x) {
+            console.log("Hello from " + x);
+        }
+
+        say_hello_js("Javascript!");
+        eel.say_hello_py("Python!");
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h3>Welcome to the Lottery!</h3>
+        <a href="ticket.html" class="btn btn-primary btn-lg" role="button">Sell a Ticket</a>
+        <a href="#" class="btn btn-secondary btn-lg" role="button">View Sold Tickets</a>
+        <a href="#" class="btn btn-danger btn-lg" role="button">Run the Lottery</a>
+    </div>
+</body>
+</html >

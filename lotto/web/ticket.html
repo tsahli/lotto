@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Sell Ticket</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script type="text/javascript" src="/eel.js"></script>
+    <script type="text/javascript">
+        function setNames(nameList) {
+            var select = document.getElementById("Names")
+            for (var i = 0; i < nameList.length; i++) {
+                var opt = nameList[i];
+                var el = document.createElement("option");
+                el.textContent = opt;
+                el.value = opt;
+                select.appendChild(el);
+            }
+        }
+        eel.getUserNames()(setNames);
+    </script>
+</head>
+<body>
+    <form>
+        <div class="form-group">
+            <label>Number of Tickets:</label>
+            <select class="form-control">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
+                <option>7</option>
+                <option>8</option>
+                <option>9</option>
+                <option>10</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Name:</label>
+            <select class="form-control" id="Names">
+                <option>Select a Name</option>
+            </select>
+        </div>
+        <div class="col text-center">
+            <button type="submit" class="btn btn-primary">Create Tickets</button>
+        </div>
+    </form>
+</body>
+</html>
