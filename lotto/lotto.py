@@ -36,6 +36,15 @@ def read(query):
     return fetch
 
 @eel.expose
+def addUser(person):
+    personT = person.title()
+    userNames = getUserNames()
+    if personT not in userNames:
+        database()
+        cursor.execute("INSERT INTO `Users` (`Name`) VALUES (?)", (personT,))
+        conn.commit()
+
+@eel.expose
 def getUserNames():
     fetch = read("SELECT * FROM `Users` ORDER BY `Name`")
     nameList = []
@@ -85,9 +94,17 @@ def getSoldTickets():
     return fetch
 
 @eel.expose
+def resetLottery():
+    database()
+    cursor.execute("DELETE FROM `Lottery`")
+    conn.commit()
+    cursor.close()
+    conn.close()
+    return "Lottery has been reset."
+
+@eel.expose
 def runLottery():
     winningNumbers = generatePicks()
-    #winningNumbers = [9, 8, 1]
     winningNumbersStr = str(winningNumbers[0]) + ", " + str(winningNumbers[1]) + ", " + str(winningNumbers[2])
     database()
     fetch = read("SELECT `Name`, `Date` FROM `Lottery` WHERE `Numbers` = '" + winningNumbersStr + "'")
@@ -104,4 +121,5 @@ def runLottery():
 
 
 eel.start('ticket.html', size=(800,800))
+
 

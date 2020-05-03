@@ -19,6 +19,7 @@
                 select.appendChild(el);
             }
         }
+
         eel.getUserNames()(setNames);
 
         function makeTicket() {
@@ -29,6 +30,17 @@
                 name: name
             };
             eel.makeTicket(obj)();
+        }
+
+        function addUser() {
+            var txt;
+            var person = prompt("Please enter the users name:", "");
+            if (person == null || person == "") {
+                txt = "User cancelled the prompt.";
+            } else {
+                eel.addUser(person)();
+                location.reload();
+            }
         }
 
     </script>
@@ -52,7 +64,7 @@
     <form onsubmit="makeTicket()">
         <div class="form-group">
             <label> Number of Tickets:</label>
-            <select class="form-control" id="ticketNums" required>
+            <select class="form-control form-control-lg" id="ticketNums" required>
                 <option>1</option>
                 <option>2</option>
                 <option>3</option>
@@ -67,12 +79,16 @@
         </div>
         <div class="form-group">
             <label> Name:</label>
-            <select class="form-control" id="Names" required>
+            <select class="form-control form-control-lg" id="Names" required>
                 <option></option>
             </select>
         </div>
         <div class="col text-center">
-            <button type="submit" class="btn btn-primary">Create Tickets</button>
+            <button type="submit" class="btn btn-primary btn-lg">Create Tickets</button>
+        </div>
+        <div class="col text-center">
+            <p><i><br />Each ticket costs $5 and has a 1:121 chance of winning.</i></p>
+            <p><i>No duplicates, each ticket sold has unique numbers.</i></p>
         </div>
     </form>
 </body>
@@ -80,6 +96,7 @@
 <footer class="footer">
     <div class="container">
         <span class="text-muted">Created by Taylor Sahli</span>
+        <a type="button" class="btn btn-light" onclick="addUser();">Add a User</a>
     </div>
 </footer>
 

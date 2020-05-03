@@ -35,6 +35,14 @@
             }
         }
 
+        function resetLotto() {
+            if (confirm("Are you sure you want to erase all tickets? This cannot be undone. It should only be done right after a jackpot is hit.")) {
+                eel.resetLottery()();
+                location.reload();
+            } else {
+                return false;
+            }
+        }
         eel.getSoldTickets()(setTickets);
 
     </script>
@@ -68,6 +76,9 @@
 
         </tbody>
     </table>
+    <div class="col text-center">
+        <a type="button" class="btn btn-danger" onclick="return resetLotto();">Erase All Tickets</a>
+    </div>
 </body>
 
 <footer class="footer">

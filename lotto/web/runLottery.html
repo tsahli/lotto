@@ -44,6 +44,13 @@
             document.getElementById("btnDiv").appendChild(btn);
         }
 
+        function setTickets(ticketList) {
+            var jackpotHeading = document.getElementById("jackpotHeading");
+            var jackpot = ticketList.length * 5;
+            jackpotHeading.innerHTML = "Jackpot: $" + jackpot.toString();
+        }
+        eel.getSoldTickets()(setTickets);
+
     </script>
     <nav class="navbar navbar-default">
         <div class="container-fluid">
@@ -60,8 +67,7 @@
 </head>
 <body>
     <div class="col text-center">
-        <p>The button below will select three random numbers, and display the name of the winner, if there was one.</p>
-
+        <h2 id="jackpotHeading"></h2>
         <a onclick="eel.runLottery()(runLotto);" class="btn btn-danger btn-lg" role="button">Run the Lottery</a>
     </div>
     <div class="col text-center">
