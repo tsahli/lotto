@@ -6,32 +6,43 @@
     <title>Run Lottery</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="odometer-theme-default.css" />
+    <link href="sticky-footer.css" rel="stylesheet" />
     <script type="text/javascript" src="odometer.js"></script>
     <script type="text/javascript" src="/eel.js"></script>
     <script type="text/javascript">
 
         function runLotto(results) {
-            var winningNums = results[1];
-            var numArray = winningNums.split(",");
-            console.log(numArray);
-            var num1 = parseInt(numArray[0]);
-            if (num1.toString().length == 1) {
-                num1 = "" + 0 + num1;
+            var showBtn = document.getElementById("createdBtn");
+            if (showBtn != null) {
+                showBtn.remove();
             }
-            console.log(num1);
+            document.getElementById("winnerName").innerHTML = "";
+            document.getElementById("winnerDate").innerHTML = "";
+            console.log(results);
+            var winningNums = results[1];
+            var winningName = results[0];
+            var winningDate = results[2];
+            var numArray = winningNums.split(",");
+            var num1 = parseInt(numArray[0]);
             var num2 = parseInt(numArray[1]);
             var num3 = parseInt(numArray[2]);
+            var nums = "" + num1 + num2 + num3;
             setTimeout(function () {
-                odometer1.innerHTML = num1;
-                odometer2.innerHTML = num2;
-                odometer3.innerHTML = num3;
+                odometer.innerHTML = nums;
             }, 500);
+            var btn = document.createElement("BUTTON");
+            btn.id = "createdBtn";
+            btn.innerHTML = "Show Winner";
+            btn.onclick = function () {
+                var winner = document.getElementById("winnerName");
+                winner.innerHTML = "";
+                winner.innerHTML = winningName;
+                var date = document.getElementById("winnerDate");
+                date.innerHTML = "";
+                date.innerHTML = "With ticket bought on " + winningDate;
+            }
+            document.getElementById("btnDiv").appendChild(btn);
         }
-
-        
-
-
-
 
     </script>
     <nav class="navbar navbar-default">
@@ -58,9 +69,18 @@
         <h1 id="winnersName"></h1>
     </div>
     <div class="col text-center">
-        <p style="font-size:100px;" id="odometer1" class="odometer"></p>
-        <p style="font-size:100px;" id="odometer2" class="odometer"></p>
-        <p style="font-size:100px;" id="odometer3" class="odometer"></p>
+        <p style="font-size:200px;" id="odometer" class="odometer">999</p>
+    </div>
+    <div class="col text-center" id="btnDiv">
+        <h3 id="winnerName"></h3>
+        <h3 id="winnerDate"></h3>
     </div>
 </body>
+
+<footer class="footer">
+    <div class="container">
+        <span class="text-muted">Created by Taylor Sahli</span>
+    </div>
+</footer>
+
 </html>

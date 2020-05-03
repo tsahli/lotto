@@ -15,16 +15,16 @@ def database():
         return
     cursor = conn.cursor()
 
-# 1-10 inclusive, no repetition, ascending order
+# 0-9 inclusive, no repetition, descending order
 def generatePicks():
     pickList = []
     while len(pickList) < 3:
-        num = secrets.choice(range(1, 11))
+        num = secrets.choice(range(0, 10))
         if num not in pickList:
             pickList.append(num)
         else:
             continue
-    pickList.sort()
+    pickList.sort(reverse=True)
     return pickList
 
 def read(query):
@@ -59,7 +59,7 @@ def makeTicket(obj):
     while i < int(numTickets):
         picks = generatePicks()
         pickStr = str(picks[0]) + ", " + str(picks[1]) + ", " + str(picks[2])
-        if pickStr not in existingPickList:
+        if pickStr not in existingPickList and pickStr not in userPicks:
             userPicks.append(pickStr)
             database()
             cursor.execute("INSERT INTO `Lottery` (`Name`, `Numbers`, `Date`) VALUES (?,?,?)", (name, pickStr, str(today)))
@@ -71,7 +71,7 @@ def makeTicket(obj):
     conn.close()
 
     desktop = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop') 
-    userPicks.sort()
+    userPicks.sort(reverse=True)
     filename = desktop + "\\" + name + " Picks on " + str(today) + ".txt"
     with open(filename, "a") as txtFile:
         txtFile.write(name + "\t" + str(today) + "\n\n")
@@ -86,17 +86,20 @@ def getSoldTickets():
 
 @eel.expose
 def runLottery():
-    #winningNumbers = generatePicks()
-    winningNumbers = [8, 9, 10]
+    winningNumbers = generatePicks()
+    #winningNumbers = [9, 8, 1]
     winningNumbersStr = str(winningNumbers[0]) + ", " + str(winningNumbers[1]) + ", " + str(winningNumbers[2])
     database()
-    fetch = read("SELECT `Name` FROM `Lottery` WHERE `Numbers` = '" + winningNumbersStr + "'")
-    if fetch is not None:
+    fetch = read("SELECT `Name`, `Date` FROM `Lottery` WHERE `Numbers` = '" + winningNumbersStr + "'")
+    winnersName = ""
+    ticketDate = ""
+    if len(fetch) != 0:
         for row in fetch:
             winnersName = row[0]
-        return winnersName, winningNumbersStr
+            ticketDate = row[1]
+        return winnersName, winningNumbersStr, ticketDate
     else:
-        return "There was no winner!", winningNumbersStr
+        return "There was no winner!", winningNumbersStr, "N/A"
 
 
 

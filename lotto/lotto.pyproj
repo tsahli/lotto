@@ -28,8 +28,8 @@
     <Folder Include="web\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="web\index.html" />
     <Content Include="web\odometer.js" />
+    <Content Include="web\sticky-footer.css" />
     <Content Include="web\ticket.html" />
     <Content Include="web\viewTickets.html" />
     <Content Include="web\runLottery.html" />
