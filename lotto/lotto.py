@@ -9,7 +9,8 @@ eel.init('web')
 def database():
     global conn, cursor
     try:
-        conn = sqlite3.connect("lottery.db")
+        appDataRoaming = os.getenv('APPDATA')
+        conn = sqlite3.connect(appDataRoaming + "\\lottery.db")
     except sqlite3.Error as e:
         print("Error connecting to the database!\n" + str(e))
         return
